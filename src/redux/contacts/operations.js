@@ -1,41 +1,50 @@
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { goitApi } from '../../config/goitApi';
 
-axios.defaults.baseURL = "https://connections-api.goit.global/";
-
-export const fetchContacts = createAsyncThunk(
-  "contacts/fetchAll",
+export const fetchContactsThunk = createAsyncThunk(
+  'contacts/fetchAll',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get("/contacts");
-
-      return response.data;
-    } catch (e) {
-      console.log("err");
-      return thunkAPI.rejectWithValue(e.message);
+      const { data } = await goitApi.get('contacts');
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
 
-export const addContact = createAsyncThunk(
-  "contacts/addContacts",
-  async (body, thunkAPI) => {
+export const deleteContactThunk = createAsyncThunk(
+  'contacts/deleteContact',
+  async (id, thunkAPI) => {
     try {
-      const response = await axios.post("/contacts", body);
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      const { data } = await goitApi.delete(`contacts/${id}`);
+      return data.id;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
-export const deleteContact = createAsyncThunk(
-  "contacts/deleteContact",
-  async (taskId, thunkAPI) => {
+
+export const addContactThunk = createAsyncThunk(
+  'contacts/addContact',
+  async (contact, thunkAPI) => {
     try {
-      const response = await axios.delete(`/contacts/${taskId}`);
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      const { data } = await goitApi.post('contacts', contact);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const editContactThunk = createAsyncThunk(
+  'contacts/edit',
+  async ({ id, name, number }, thunkAPI) => {
+    try {
+      const { data } = await goitApi.patch(`/contacts/${id}`, { name, number });
+      return { data };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );

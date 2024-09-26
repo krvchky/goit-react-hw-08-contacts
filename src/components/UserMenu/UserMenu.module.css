@@ -1,6 +1,16 @@
-.cont {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-  }
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logoutBtn {
+  border: none;
+  background-color: inherit;
+  color: white;
+}
+
+.logoutBtn:hover {
+  cursor: pointer;
+  color: blanchedalmond;
+}

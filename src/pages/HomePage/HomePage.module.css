@@ -1,0 +1,14 @@
+.homeWrapper {
+  width: 1080px;
+  height: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.mainTitle {
+  width: 300px;
+  font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-weight: 400;
+}

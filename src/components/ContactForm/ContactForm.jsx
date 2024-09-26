@@ -1,56 +1,73 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import React, { useState } from 'react';
+import s from './ContactForm.module.css';
+import { Field, Form, Formik } from 'formik';
+import { CiCirclePlus } from 'react-icons/ci';
+import { useDispatch } from 'react-redux';
+import * as Yup from 'yup';
+import { ErrorMessage } from 'formik';
+import { addContactThunk } from '../../redux/contacts/operations';
+import { Toaster, toast } from 'react-hot-toast';
 
-import s from "./ContactForm.module.css";
-import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contacts/operations";
+const ContactSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(4, 'To short!')
+    .max(20, 'To long!')
+    .required('Please, enter a valid name'),
+  number: Yup.string()
+    .matches(/^\d+$/, 'Only digits please')
+    .min(10, 'To short')
+    .max(11, 'To long')
+    .required('Please, enter a valid phone number'),
+});
 
 const ContactForm = () => {
   const dispatch = useDispatch();
-  const initialValues = {
-    name: "",
-    number: "",
-  };
-  const FeedbackSchema = Yup.object().shape({
-    name: Yup.string()
-      .min(3, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
-    number: Yup.string()
-      .min(3, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
-  });
-
-  const handleSubmit = (values, options) => {
-    const newItem = { name: values.name, number: values.number };
-
-    dispatch(addContact(newItem));
+  const initialValues = { name: '', number: '' };
+  const addNotify = () => toast.success('Contact added to your contacts book');
+  const onSubmit = (values, options) => {
+    dispatch(addContactThunk({ name: values.name, number: values.number }));
+    addNotify();
     options.resetForm();
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validationSchema={FeedbackSchema}
-    >
-      <Form className={s.form}>
-        <label htmlFor="name" className={s.label}>
-          Name:
-          <Field type="text" name="name" className={s.input} />
-          <ErrorMessage name="name" component="p" />
-        </label>
-
-        <label htmlFor="number" className={s.label}>
-          Number:
-          <Field type="text" name="number" className={s.input} />
-          <ErrorMessage name="number" component="p" />
-        </label>
-        <button   className="button" type="submit">Add Contact</button>
-        
-      </Form>
-    </Formik>
+    <div className={s.formWraper}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={ContactSchema}
+      >
+        <Form className={s.form}>
+          <Field
+            className={s.input}
+            type="text"
+            name="name"
+            placeholder="Enter contact's name"
+          />
+          <ErrorMessage
+            className={s.ErrorMessage}
+            name="name"
+            component="span"
+          />
+          <Field
+            className={s.input}
+            type="number"
+            name="number"
+            placeholder="Enter contact's phone number"
+          />
+          <ErrorMessage
+            className={s.ErrorMessage}
+            name="number"
+            component="span"
+          />
+          <button type="submit" className={s.addBtn}>
+            <CiCirclePlus />
+            Add contact
+          </button>
+        </Form>
+      </Formik>
+      <Toaster position="top-center" reverseOrder={false} />
+    </div>
   );
 };
 

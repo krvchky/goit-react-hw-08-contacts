@@ -1,0 +1,15 @@
+.contactsList {
+    justify-content: center;
+    align-items: center;
+    padding: 100px;
+  
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

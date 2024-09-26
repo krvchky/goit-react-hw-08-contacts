@@ -1,4 +1,14 @@
-.cont {
-    display: flex;
-    gap: 16px;
-  }
+.navigation {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.navigation a {
+  text-decoration: none;
+  color: white;
+}
+
+.navigation a:hover {
+  color: blanchedalmond;
+}

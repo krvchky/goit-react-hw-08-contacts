@@ -1,0 +1,15 @@
+.navigation {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.navigation a {
+  text-decoration: none;
+  color: white;
+  font-size: 30px;
+}
+
+.navigation a:hover {
+  color: blanchedalmond;
+}

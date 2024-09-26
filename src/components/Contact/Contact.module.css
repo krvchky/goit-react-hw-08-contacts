@@ -1,0 +1,60 @@
+.contactWraper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+  padding: 20px;
+
+  width: 400px;
+  height: 150px;
+
+  border: 1px black solid;
+  border-radius: 15px;
+}
+
+.infoWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.nameBox,
+.numberBox {
+  font-size: 20px;
+}
+
+.deleteBtn {
+  border: none;
+  background-color: transparent;
+}
+
+.deleteBtn:hover {
+  cursor: pointer;
+}
+
+.deleteBtn svg {
+  width: 40px;
+  height: 40px;
+  color: red;
+}
+
+.editBtn {
+  border: none;
+  background-color: transparent;
+}
+
+.editBtn:hover {
+  cursor: pointer;
+}
+
+.editBtn svg {
+  width: 40px;
+  height: 40px;
+  color: rgb(24, 82, 13);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+}
